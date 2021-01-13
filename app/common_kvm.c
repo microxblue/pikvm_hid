@@ -8,7 +8,7 @@
 
 static uint8_t hid_state = 0xff;
 
-void hex_dump (uint8_t *buf, int len)
+void hex_dump (uint8_t *buf, int len, uint8_t lvl)
 {
 	int i;
 	int off;
@@ -16,16 +16,16 @@ void hex_dump (uint8_t *buf, int len)
 	off = 0;
 	for (i = 0; i < len; i++) {
 		if ((i & 0xf) == 0x00) {
-			dprintf (6, "  %04X: ", off);
+			dprintf (lvl, "  %04X: ", off);
 		}
-		dprintf (6, "%02X ", buf[i]);
+		dprintf (lvl, "%02X ", buf[i]);
 		if ((i & 0xf) == 0x0f) {
-			dprintf (6, "\n");
+			dprintf (lvl, "\n");
 			off += 16;
 		}
 	}
 	if (i & 0xf) {
-		dprintf (6, "\n");
+		dprintf (lvl, "\n");
 	}
 }
 
@@ -41,9 +41,9 @@ void set_hid_state (uint8_t device, uint8_t state)
 	}
 
 	if (state) {
-		hid_state |=  (1<<device);
+		hid_state |=  (1 << device);
 	} else {
-		hid_state &= ~(1<<device);
+		hid_state &= ~(1 << device);
 	}
 }
 
@@ -52,7 +52,7 @@ uint8_t get_hid_state (uint8_t device)
 	if ((device != HID_DEV_KEYBOARD) && (device != HID_DEV_MOUSE)) {
 		return 0;
 	}
-	return (hid_state & (1<<device)) ? 1 : 0;
+	return (hid_state & (1 << device)) ? 1 : 0;
 }
 
 uint8_t send_hid_report (USBD_HID_IfHandleType *itf, void *data, uint16_t length, int8_t retry, uint8_t interval)
@@ -65,7 +65,7 @@ uint8_t send_hid_report (USBD_HID_IfHandleType *itf, void *data, uint16_t length
 			break;
 		}
 		HAL_Delay (interval);
-	}	while (retry-- > 0);
+	}   while (retry-- > 0);
 
 	if (ret == USBD_E_OK) {
 		return length;

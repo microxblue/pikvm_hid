@@ -9,8 +9,8 @@
 
 #include "common_kvm.h"
 
-#define  MAGIC			            0x33
-#define  MAGIC_RESP	            0x34
+#define  MAGIC                  0x33
+#define  MAGIC_RESP             0x34
 #define  RESP_NONE              0x24
 #define  RESP_CRC_ERROR         0x40
 #define  RESP_INVALID_ERROR     0x45
@@ -30,8 +30,8 @@
 #define  PONG_SCROLL            0x02
 #define  PONG_NUM               0x04
 #define  PONG_KEYBOARD_OFFLINE  0x08
-#define  PONG_MOUSE_OFFLINE  		0x10
-#define  PONG_RESET_REQUIRED  	0x40
+#define  PONG_MOUSE_OFFLINE     0x10
+#define  PONG_RESET_REQUIRED    0x40
 
 #define  OUTPUTS_KEYBOARD_USB   0x01
 #define  OUTPUTS_MOUSE_USB_ABS  0x08

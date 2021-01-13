@@ -34,7 +34,7 @@ extern  USBD_HID_IfHandleType *const hid_kb_if;
 extern  USBD_HID_IfHandleType *const hid_ms_if;
 #endif
 
-void    hex_dump (uint8_t *buf, int len);
+void    hex_dump (uint8_t *buf, int len, uint8_t lvl);
 uint8_t get_hid_state (uint8_t device);
 void    set_hid_state (uint8_t device, uint8_t state);
 uint8_t send_hid_report (USBD_HID_IfHandleType *itf, void *data, uint16_t length, int8_t retry, uint8_t interval);

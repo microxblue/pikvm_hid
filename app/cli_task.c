@@ -16,7 +16,7 @@ void handle_command ()
 	uint8_t  cmd_buf[MAX_CMD_LEN];
 	bool     valid;
 	uint16_t fnr;
-  uint32_t tick;
+	uint32_t tick;
 	uint8_t  ch;
 	uint8_t  i;
 
@@ -30,7 +30,7 @@ void handle_command ()
 			valid = true;
 			cmd_buf[i]  = 0;
 			break;
-		}	else {
+		}   else {
 			cmd_buf[i]  = ch;
 		}
 	}
@@ -41,12 +41,12 @@ void handle_command ()
 			set_hid_state (HID_DEV_ALL, 0);
 		} else if (!(last_fnr & USB_FNR_LCK)) {
 			set_hid_state (HID_DEV_ALL, 1);
-    }
+		}
 		last_fnr = fnr;
 
 		tick = HAL_GetTick();
 		dprintf (4, "CMD RX: (%8d)\n", tick);
-		hex_dump (cmd_buf, i);
+		hex_dump (cmd_buf, i, 4);
 
 		if (cmd_buf[0] == MAGIC) {
 			handle_pikvm_command (cmd_buf, i);

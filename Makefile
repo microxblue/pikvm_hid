@@ -100,17 +100,17 @@ navilos_bin = $(navilos_base).bin
 
 .PHONY: all clean run prebuild
 
-all: $(navilos)
+all: prebuild $(navilos)
 
 prebuild:
 	@echo Create outout direcotry..
-	@mkdir -p $(OUT_DIR)
+	@[ -d $(OUT_DIR) ] || mkdir $(OUT_DIR)
 
 clean:
 	@echo Clean..
 	@rm $(OUT_DIR) -Rf
 
-$(navilos): prebuild $(ASM_OBJS) $(CC_OBJS) $(C_OBJS) Makefile
+$(navilos): $(ASM_OBJS) $(CC_OBJS) $(C_OBJS) Makefile
 	@echo Linking..
 	@echo Generate binary.. $(navilos_bin)
 	@$(CC) $(COMMON_FLG) $(ASM_OBJS) $(CC_OBJS) $(C_OBJS) -o $(navilos) -n -T $(LINKER_SCRIPT) -Wl,-Map=$(MAP_FILE) $(LDFLAGS)
