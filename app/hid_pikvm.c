@@ -306,4 +306,3 @@ void handle_pikvm_command (uint8_t *cmd_buf, uint8_t cmd_len)
 
   send_uart_rsp (resp);
 }
-
