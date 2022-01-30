@@ -190,6 +190,7 @@ void handle_pikvm_command (uint8_t *cmd_buf, uint8_t cmd_len)
   bool     skip;
   int16_t  x;
   int16_t  y;
+  int8_t delta_y;
 
   resp = RESP_NONE;
 
@@ -215,7 +216,28 @@ void handle_pikvm_command (uint8_t *cmd_buf, uint8_t cmd_len)
     case CMD_REPEAT:
       resp = 0;
       break;
-
+    case CMD_WHEEL:
+      rpt_len = HID_MS_REPORT_BYTE;
+      hid_rpt[0] = 2;
+      delta_y = (int8_t)(cmd_buf[3]);
+      button = 0;
+      hid_rpt[1] = button;
+      hid_rpt[2] = 0;
+      hid_rpt[3] = 0;
+      hid_rpt[4] = 0;
+      hid_rpt[5] = 0;
+      hid_rpt[6] = delta_y;
+      sent = send_hid_report(hid_ms_if, hid_rpt + (1 - HID_KB_MS_COMB), rpt_len, 3, 10);
+      if (sent == rpt_len)
+      {
+        set_hid_state(HID_DEV_MOUSE, 1);
+      }
+      else
+      {
+        set_hid_state(HID_DEV_MOUSE, 0);
+      }
+      resp = PONG_OK;
+      break;
     case CMD_BUTTON:
     case CMD_MOVE:
       rpt_len   = HID_MS_REPORT_BYTE;
@@ -306,4 +328,3 @@ void handle_pikvm_command (uint8_t *cmd_buf, uint8_t cmd_len)
 
   send_uart_rsp (resp);
 }
-
